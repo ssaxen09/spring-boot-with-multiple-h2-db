@@ -10,14 +10,30 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.inMemoryAuthentication().withUser("user").password("{noop}password")
+		authenticationManagerBuilder.inMemoryAuthentication()
+				.withUser("user")
+				.password("{noop}password")
 				.roles("USER");
 	}
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().and().authorizeRequests().antMatchers("/example/*").hasRole("USER").and().csrf().disable()
-				.formLogin().disable();
+		http.httpBasic()
+				.and()
+				.authorizeRequests()
+				.antMatchers("/example/*")
+				.hasRole("USER")
+				.and()
+				.authorizeRequests()
+				.antMatchers("/actuators/*")
+				.permitAll()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.csrf()
+				.disable()
+				.formLogin()
+				.disable();
 	}
 
 }
