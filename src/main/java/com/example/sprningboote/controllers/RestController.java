@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @org.springframework.web.bind.annotation.RestController
+@RequestMapping("example")
 public class RestController {
 	@Autowired
 	private EmployeeService employeeService;
